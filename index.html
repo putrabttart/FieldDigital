@@ -137,7 +137,6 @@
 
 <body>
     <!-- Navbar -->
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold text-dark d-flex align-items-center gap-2" href="#">
@@ -200,8 +199,7 @@
                         <span class="text-primary">Field</span><span class="text-success">Digital</span> hadir sebagai solusi digitalisasi semua jenis lapangan olahraga Anda.
                     </h1>
                     <p class="lead mb-4">
-                        Sekarang giliranmu untuk merasakan #MainMakinMudah – Bawa pengalaman seru ke
-                        dalam genggamanmu. Pesan sekarang!
+                        <strong>Digitalisasi</strong> lapangan olahraga Anda jadi lebih <strong>mudah</strong> dan <strong>praktis</strong>. Kelola <strong>jadwal</strong>, <strong>booking</strong>, dan <strong>pembayaran</strong> dalam satu platform. <span class="fw-semibold text-success">#LapanganGoDigital</span>
                     </p>
                     <div class="app-buttons d-flex justify-content-center justify-content-md-start">
                         <a href="#kontak" target="_blank" aria-label="Download on the App Store">
@@ -353,8 +351,9 @@
 
                 <div class="col-md-4" data-aos="zoom-in">
                     <div class="card border-0 shadow-sm">
-                        <img src="img/utama.png" class="card-img-top"
-                            alt="Tampilan Home Page Website">
+                        <a href="img/utama.png" class="gallery-img" data-index="0">
+                            <img src="img/utama.png" class="card-img-top" alt="Tampilan Home Page Website">
+                        </a>
                         <div class="card-body text-center">
                             <p class="card-text text-muted small">Tampilan utama yang menarik dan informatif.</p>
                         </div>
@@ -363,8 +362,9 @@
 
                 <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
                     <div class="card border-0 shadow-sm">
-                        <img src="img/jadwal.png" class="card-img-top"
-                            alt="Tampilan Booking Online">
+                        <a href="img/jadwal.png" class="gallery-img" data-index="1">
+                            <img src="img/jadwal.png" class="card-img-top" alt="Tampilan Booking Online">
+                        </a>
                         <div class="card-body text-center">
                             <p class="card-text text-muted small">Antarmuka jadwal yang mudah digunakan.</p>
                         </div>
@@ -373,8 +373,9 @@
 
                 <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
                     <div class="card border-0 shadow-sm">
-                        <img src="img/admin.png" class="card-img-top"
-                            alt="Tampilan Dashboard Admin">
+                        <a href="img/admin.png" class="gallery-img" data-index="2">
+                            <img src="img/admin.png" class="card-img-top" alt="Tampilan Dashboard Admin">
+                        </a>
                         <div class="card-body text-center">
                             <p class="card-text text-muted small">Dashboard intuitif untuk pengelolaan lapangan.</p>
                         </div>
@@ -384,6 +385,84 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal Galeri -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+          <div class="modal-body p-0 position-relative">
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-3 z-2" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            <button type="button" class="btn btn-light position-absolute top-50 start-0 translate-middle-y z-2 gallery-prev" style="opacity:0.7;border-radius:50%;"><i class="fa fa-chevron-left"></i></button>
+            <img src="" alt="" id="galleryModalImg" class="w-100 rounded shadow-lg" style="max-height:80vh;object-fit:contain;background:#fff;">
+            <button type="button" class="btn btn-light position-absolute top-50 end-0 translate-middle-y z-2 gallery-next" style="opacity:0.7;border-radius:50%;"><i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+        #galleryModal .btn-close { background: #fff; border-radius: 50%; }
+        #galleryModal .btn { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+        #galleryModal .fa { font-size: 1.5rem; }
+        @media (max-width: 575.98px) {
+            #galleryModal .btn { width: 36px; height: 36px; }
+            #galleryModal .fa { font-size: 1.1rem; }
+        }
+    </style>
+    <script>
+        // Galeri gambar
+        const galleryImages = [
+            {src: 'img/utama.png', alt: 'Tampilan Home Page Website'},
+            {src: 'img/jadwal.png', alt: 'Tampilan Booking Online'},
+            {src: 'img/admin.png', alt: 'Tampilan Dashboard Admin'}
+        ];
+        let currentGalleryIndex = 0;
+
+        document.querySelectorAll('.gallery-img').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                currentGalleryIndex = parseInt(this.getAttribute('data-index'));
+                showGalleryModal(currentGalleryIndex);
+            });
+        });
+
+        function showGalleryModal(idx) {
+            const modalImg = document.getElementById('galleryModalImg');
+            modalImg.src = galleryImages[idx].src;
+            modalImg.alt = galleryImages[idx].alt;
+            const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+            modal.show();
+        }
+
+        document.querySelector('.gallery-prev').addEventListener('click', function() {
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+            showGalleryImage(currentGalleryIndex);
+        });
+        document.querySelector('.gallery-next').addEventListener('click', function() {
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+            showGalleryImage(currentGalleryIndex);
+        });
+
+        function showGalleryImage(idx) {
+            const modalImg = document.getElementById('galleryModalImg');
+            modalImg.src = galleryImages[idx].src;
+            modalImg.alt = galleryImages[idx].alt;
+        }
+
+        // Keyboard navigation
+        document.getElementById('galleryModal').addEventListener('shown.bs.modal', function () {
+            document.addEventListener('keydown', galleryKeyHandler);
+        });
+        document.getElementById('galleryModal').addEventListener('hidden.bs.modal', function () {
+            document.removeEventListener('keydown', galleryKeyHandler);
+        });
+        function galleryKeyHandler(e) {
+            if (e.key === 'ArrowLeft') {
+                document.querySelector('.gallery-prev').click();
+            } else if (e.key === 'ArrowRight') {
+                document.querySelector('.gallery-next').click();
+            }
+        }
+    </script>
 
     <!-- Pricing Section -->
     <section class="pricing-section py-5 bg-white" id="harga" data-aos="fade-up">
@@ -594,7 +673,7 @@
             <h2 class="mb-3 fw-bold" data-aos="fade-up">Hubungi Kami</h2>
             <p class="mb-4" data-aos="fade-up" data-aos-delay="100">Gratis demo & konsultasi langsung via WhatsApp</p>
 
-            <a href="https://wa.me/6282340915319" target="_blank"
+            <a href="https://wa.me/628xxxxxxxxxx" target="_blank"
                 class="btn btn-success btn-lg px-4 py-2 d-inline-flex align-items-center rounded-pill shadow-sm"
                 data-aos="zoom-in" data-aos-delay="200">
                 <i data-lucide="message-circle" class="me-2" style="width: 22px;"></i> Hubungi via WhatsApp
@@ -623,7 +702,7 @@
     </footer>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/6282340915319" class="whatsapp-float shadow-lg" target="_blank" aria-label="Chat via WhatsApp" data-aos="zoom-in" data-aos-delay="300" style="text-decoration: none;">
+    <a href="https://wa.me/628xxxxxxxxxx" class="whatsapp-float shadow-lg" target="_blank" aria-label="Chat via WhatsApp" data-aos="zoom-in" data-aos-delay="300" style="text-decoration: none;">
         <i class="fab fa-whatsapp"></i>
     </a>
     <style>
